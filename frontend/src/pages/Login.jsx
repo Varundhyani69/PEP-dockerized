@@ -17,7 +17,7 @@ function Login() {
 
         try {
             await api(
-                `http://localhost:5000/api/auth/${isSignup ? "signup" : "login"}`,
+                `/api/auth/${isSignup ? "signup" : "login"}`,
                 {
                     method: "POST",
                     body: JSON.stringify(formData),

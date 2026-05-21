@@ -11,11 +11,11 @@ function ProtectedRoute({ children }) {
     useEffect(() => {
         const init = async () => {
             try {
-                await api("http://localhost:5000/api/auth/me");
+                await api("/api/auth/me");
 
                 const [projects, tasks] = await Promise.all([
-                    api("http://localhost:5000/api/projects"),
-                    api("http://localhost:5000/api/tasks"),
+                    api("/api/projects"),
+                    api("/api/tasks"),
                 ]);
 
                 dispatch(setProjects(projects));

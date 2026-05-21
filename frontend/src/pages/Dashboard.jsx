@@ -22,7 +22,7 @@ function Dashboard() {
     const [projectId, setProjectId] = useState("");
 
     const createProject = async () => {
-        await api("http://localhost:5000/api/projects", {
+        await api("/api/projects", {
             method: "POST",
             body: JSON.stringify({
                 name: projectName,
@@ -37,7 +37,7 @@ function Dashboard() {
     };
 
     const createTask = async () => {
-        await api("http://localhost:5000/api/tasks", {
+        await api("/api/tasks", {
             method: "POST",
             body: JSON.stringify({
                 title: taskTitle,

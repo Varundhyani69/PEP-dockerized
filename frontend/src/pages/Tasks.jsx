@@ -28,7 +28,7 @@ function Tasks() {
     const handleAddTask = async () => {
         if (!title.trim() || !projectId) return;
 
-        const task = await api("http://localhost:5000/api/tasks", {
+        const task = await api("/api/tasks", {
             method: "POST",
             body: JSON.stringify({
                 title,

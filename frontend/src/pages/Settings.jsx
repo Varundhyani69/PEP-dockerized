@@ -14,7 +14,7 @@ function Settings() {
 
     /* FETCH AUTH USER */
     useEffect(() => {
-        api("http://localhost:5000/api/auth/me")
+        api("/api/auth/me")
             .then((data) => {
                 setUser(data.user);
                 setName(data.user.name);
@@ -31,7 +31,7 @@ function Settings() {
     };
 
     const handleLogout = async () => {
-        await api("http://localhost:5000/api/auth/logout", {
+        await api("/api/auth/logout", {
             method: "POST",
         });
         navigate("/", { replace: true });

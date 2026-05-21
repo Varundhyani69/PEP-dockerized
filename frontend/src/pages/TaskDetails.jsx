@@ -35,7 +35,7 @@ function TaskDetails() {
         if (!subtaskTitle.trim()) return;
 
         const updated = await api(
-            `http://localhost:5000/api/tasks/${getId(task)}/subtasks`,
+            `/api/tasks/${getId(task)}/subtasks`,
             {
                 method: "POST",
                 body: JSON.stringify({ title: subtaskTitle }),
@@ -48,7 +48,7 @@ function TaskDetails() {
 
     const toggleSubtask = async (subtaskId) => {
         const updated = await api(
-            `http://localhost:5000/api/tasks/${getId(task)}/subtasks/${subtaskId}`,
+            `/api/tasks/${getId(task)}/subtasks/${subtaskId}`,
             { method: "PATCH" }
         );
 
@@ -59,7 +59,7 @@ function TaskDetails() {
         if (!assignEmail.trim()) return;
 
         const updated = await api(
-            `http://localhost:5000/api/tasks/${getId(task)}/assign`,
+            `/api/tasks/${getId(task)}/assign`,
             {
                 method: "POST",
                 body: JSON.stringify({ email: assignEmail }),

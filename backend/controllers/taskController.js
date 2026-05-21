@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Task from "../models/Task.js";
 import User from "../models/User.js";
 
@@ -15,6 +16,18 @@ export const getTasks = async (req, res) => {
    CREATE TASK
 ====================== */
 export const createTask = async (req, res) => {
+    const { projectId } = req.body;
+
+    if (projectId) {
+        if (!mongoose.isValidObjectId(projectId)) {
+            return res.status(400).json({
+                message: "Invalid projectId. projectId must be a valid ObjectId.",
+            });
+        }
+    } else {
+        delete req.body.projectId;
+    }
+
     const task = await Task.create({
         ...req.body,
         owner: req.user._id,
@@ -67,6 +80,10 @@ export const assignTask = async (req, res) => {
    SUBTASKS
 ====================== */
 export const addSubtask = async (req, res) => {
+    if (!req.body.title || !req.body.title.trim()) {
+        return res.status(400).json({ message: "Subtask title is required" });
+    }
+
     const task = await Task.findOne({
         _id: req.params.id,
         owner: req.user._id,
@@ -76,7 +93,7 @@ export const addSubtask = async (req, res) => {
         return res.status(404).json({ message: "Task not found" });
     }
 
-    task.subtasks.push({ title: req.body.title });
+    task.subtasks.push({ title: req.body.title.trim() });
     await task.save();
 
     res.json(task);

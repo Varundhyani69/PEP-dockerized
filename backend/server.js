@@ -26,6 +26,20 @@ app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 
+// Error-handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    if (err.name === "CastError") {
+        return res.status(400).json({ message: `Invalid ID format for ${err.path}` });
+    }
+    if (err.name === "ValidationError") {
+        return res.status(400).json({ message: err.message });
+    }
+    res.status(err.status || 500).json({
+        message: err.message || "Internal Server Error",
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
     console.log(`Server running on http://localhost:${PORT}`)

@@ -64,7 +64,7 @@ function ProjectDetails() {
     };
 
     const handleDeleteProject = async () => {
-        await api(`http://localhost:5000/api/projects/${projectId}`, {
+        await api(`/api/projects/${projectId}`, {
             method: "DELETE",
         });
 
