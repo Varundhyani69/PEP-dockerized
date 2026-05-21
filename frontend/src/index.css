@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+:root {
+  --bg-main: 220 25% 97%;
+  --bg-card: 0 0% 100%;
+  --bg-sidebar: 225 15% 12%;
+  --bg-input: 220 20% 94%;
+
+  --text: 222 47% 11%;
+  --text-muted: 220 9% 46%;
+
+  --border: 220 13% 91%;
+
+  --accent: 262 83% 58%;
+}
+
+
+.dark {
+  --bg-main: 222.2 84% 4.7%;
+  --bg-card: 222.2 47.4% 11.2%;
+  --bg-sidebar: 222.2 47.4% 11.2%;
+  --bg-input: 217.9 19.2% 27.8%;
+  --text: 210 40% 98%;
+  --text-muted: 215 13.8% 66.3%;
+  --border: 217.9 19.2% 27.8%;
+  --accent: 262 83% 58%;
+}
+
+html,
+body {
+  @apply bg-[hsl(var(--bg-main))] text-[hsl(var(--text))];
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.bg-\[var\(--bg-card\)\] {
+  background-color: hsl(var(--bg-card));
+}
+
+.text-\[var\(--text-muted\)\] {
+  color: hsl(var(--text-muted));
+}
+
+.border-\[var\(--border\)\] {
+  border-color: hsl(var(--border));
+}
+
+:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 2px;
+}

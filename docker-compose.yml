@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: deadline-slayer-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: deadline-slayer
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: deadline-slayer-backend
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongodb:27017/deadline-slayer
+      CORS_ORIGIN: http://localhost:5173
+      JWT_SECRET: your-secret-key-change-this
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: deadline-slayer-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
