@@ -16,8 +16,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
-    "http://localhost:5173",
-    "https://pep-dockerized-frontend.onrender.com"
+    "https://pep-dockerized-frontend.onrender.com",
+    "http://localhost:5173"
 ];
 
 app.use(cors({
