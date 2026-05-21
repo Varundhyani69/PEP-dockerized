@@ -15,12 +15,21 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    cors({
-        origin: process.env.CORS_ORIGIN || "http://localhost:5173",
-        credentials: true,
-    })
-);
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://pep-dockerized-frontend.onrender.com"
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
